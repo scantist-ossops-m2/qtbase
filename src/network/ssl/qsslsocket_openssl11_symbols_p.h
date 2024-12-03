@@ -178,4 +178,11 @@ void q_BIO_set_shutdown(BIO *a, int shut);
 #define q_SSL_CTX_set_max_proto_version(ctx, version) \
         q_SSL_CTX_ctrl(ctx, SSL_CTRL_SET_MAX_PROTO_VERSION, version, nullptr)
 
+#if OPENSSL_VERSION_NUMBER < 0x10101000L
+// What a mess!
+int q_SSL_in_init(SSL *s);
+#else
+int q_SSL_in_init(const SSL *s);
+#endif // 1.1.1 or 1.1.0
+
 #endif
